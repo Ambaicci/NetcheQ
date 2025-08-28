@@ -1,19 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 // Mock data for demonstration - we'll replace with real data later
 const mockReceivedCheques = [
   {
-    id: 1,
+    id: "7546W426",
     from: "alice@example.com",
+    issuer: "Stanley & Co.",
     amount: 250.00,
     memo: "Website design fee",
     status: "pending",
     date: "2025-01-15"
   },
   {
-    id: 2, 
+    id: "8921X357", 
     from: "bob@example.com",
+    issuer: "JP Morgan",
     amount: 125.50,
     memo: "Consulting services",
     status: "accepted",
@@ -24,7 +27,12 @@ const mockReceivedCheques = [
 export default function ReceivedPage() {
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-8">Received Cheques</h1>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-bold">Received Cheques</h1>
+          <p className="text-slate-600">Cheques sent to you will appear here</p>
+        </div>
+      </div>
 
       <div className="grid gap-6">
         {mockReceivedCheques.length === 0 ? (
@@ -37,14 +45,14 @@ export default function ReceivedPage() {
           </Card>
         ) : (
           mockReceivedCheques.map((cheque) => (
-            <Card key={cheque.id}>
+            <Card key={cheque.id} className="hover:shadow-md transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <div>
                   <CardTitle className="text-sm font-medium">
-                    From: {cheque.from}
+                    From: {cheque.issuer}
                   </CardTitle>
                   <CardDescription>
-                    {new Date(cheque.date).toLocaleDateString()}
+                    {cheque.from} • {new Date(cheque.date).toLocaleDateString()}
                   </CardDescription>
                 </div>
                 <span className={`text-xs rounded-full px-2 py-1 ${
@@ -59,12 +67,16 @@ export default function ReceivedPage() {
                 <div className="text-2xl font-bold">${cheque.amount.toFixed(2)}</div>
                 {cheque.memo && <p className="mt-2 text-sm">Memo: {cheque.memo}</p>}
                 
-                {cheque.status === 'pending' && (
-                  <div className="flex gap-2 mt-4">
-                    <Button size="sm">Accept</Button>
+                <div className="flex gap-2 mt-4">
+                  <Button asChild size="sm" className="bg-[#0095fd] hover:bg-[#0085e0]">
+                    <Link href={`/received/${cheque.id}`}>
+                      View Details
+                    </Link>
+                  </Button>
+                  {cheque.status === 'pending' && (
                     <Button size="sm" variant="outline">Decline</Button>
-                  </div>
-                )}
+                  )}
+                </div>
               </CardContent>
             </Card>
           ))

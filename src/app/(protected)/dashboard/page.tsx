@@ -31,17 +31,17 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <p className="text-slate-600">Welcome back! Here is your financial overview.</p>
         </div>
-        <Button asChild>
+        <Button asChild className="bg-blue-600 hover:bg-blue-700">
           <Link href="/issue">Issue New Cheque</Link>
         </Button>
       </div>
 
-      {/* Stats Grid with Trends */}
+      {/* Stats Grid with Trends - UPDATED COLORS */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Issued</CardTitle>
-            <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
               {stats.trends.issued}
             </span>
           </CardHeader>
@@ -54,7 +54,7 @@ export default function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Received</CardTitle>
-            <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
               {stats.trends.received}
             </span>
           </CardHeader>
@@ -77,7 +77,7 @@ export default function DashboardPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Monthly Volume</CardTitle>
-            <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
               {stats.trends.volume}
             </span>
           </CardHeader>
@@ -88,7 +88,7 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      {/* Recent Cheques Table */}
+      {/* Recent Cheques Table - UPDATED COLORS */}
       <Card>
         <CardHeader>
           <CardTitle>Recent Cheques</CardTitle>
@@ -129,15 +129,15 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
+      {/* Quick Actions - UPDATED COLORS */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Button variant="outline" asChild>
+        <Button variant="outline" asChild className="border-blue-300 text-blue-700 hover:bg-blue-50">
           <Link href="/received">View Received Cheques</Link>
         </Button>
-        <Button variant="outline" asChild>
+        <Button variant="outline" asChild className="border-blue-300 text-blue-700 hover:bg-blue-50">
           <Link href="/history">View Full History</Link>
         </Button>
-        <Button variant="outline" asChild>
+        <Button variant="outline" asChild className="border-blue-300 text-blue-700 hover:bg-blue-50">
           <Link href="/settings">Account Settings</Link>
         </Button>
       </div>
