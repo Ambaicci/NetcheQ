@@ -1,6 +1,10 @@
+﻿"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { SkeletonCard } from "@/components/ui/skeleton";
+import { useState, useEffect } from "react";
 
 // Enhanced mock data with trends
 const stats = {
@@ -10,7 +14,7 @@ const stats = {
   monthlyVolume: 34250,
   trends: {
     issued: "+12%",
-    received: "+8%", 
+    received: "+8%",
     volume: "+15%"
   }
 };
@@ -22,7 +26,59 @@ const recentCheques = [
   { id: 1031, date: "2025-01-08", amount: 1200, status: "cleared", to: "Partner LLC" }
 ];
 
-export default function DashboardPage() {
+export default function DashboardPage() {  
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate data loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="p-8">
+        {/* Header Skeleton */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="space-y-2">
+            <div className="h-8 bg-gray-200 rounded w-48 animate-pulse"></div>
+            <div className="h-4 bg-gray-200 rounded w-64 animate-pulse"></div>
+          </div>
+          <div className="h-10 bg-gray-200 rounded w-32 animate-pulse"></div>
+        </div>
+
+        {/* Stats Grid Skeletons */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {[1, 2, 3, 4].map((i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+
+        {/* Table Skeleton */}
+        <div className="bg-gray-200 rounded-lg p-6 animate-pulse mb-8">
+          <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/3 mb-6"></div>
+          <div className="space-y-3">
+            <div className="h-12 bg-gray-300 rounded"></div>
+            <div className="h-12 bg-gray-300 rounded"></div>
+            <div className="h-12 bg-gray-300 rounded"></div>
+            <div className="h-12 bg-gray-300 rounded"></div>
+          </div>
+        </div>
+
+        {/* Buttons Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-12 bg-gray-200 rounded animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-8">
       {/* Header */}
@@ -37,12 +93,12 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats Grid with Trends - UPDATED COLORS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">     
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Issued</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Issued</CardTitle>       
             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-              {stats.trends.issued}
+              {stats.trends.issued}        
             </span>
           </CardHeader>
           <CardContent>
@@ -53,9 +109,9 @@ export default function DashboardPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Received</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Received</CardTitle>     
             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-              {stats.trends.received}
+              {stats.trends.received}      
             </span>
           </CardHeader>
           <CardContent>
@@ -66,7 +122,7 @@ export default function DashboardPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Cheques</CardTitle>
+            <CardTitle className="text-sm font-medium">Pending Cheques</CardTitle>    
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.pendingCheques}</div>
@@ -76,9 +132,9 @@ export default function DashboardPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Monthly Volume</CardTitle>
+            <CardTitle className="text-sm font-medium">Monthly Volume</CardTitle>     
             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-              {stats.trends.volume}
+              {stats.trends.volume}        
             </span>
           </CardHeader>
           <CardContent>
@@ -96,7 +152,7 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="rounded-md border">
-            <table className="w-full">
+            <table className="w-full">     
               <thead>
                 <tr className="border-b bg-slate-50">
                   <th className="text-left p-4 font-medium">Cheque #</th>
@@ -113,12 +169,12 @@ export default function DashboardPage() {
                     <td className="p-4">{new Date(cheque.date).toLocaleDateString()}</td>
                     <td className="p-4">{cheque.to}</td>
                     <td className="p-4 text-right font-mono">${cheque.amount.toLocaleString()}</td>
-                    <td className="p-4">
+                    <td className="p-4">   
                       <span className={`text-xs rounded-full px-2 py-1 ${
-                        cheque.status === 'cleared' ? 'bg-green-100 text-green-800' :
+                        cheque.status === 'cleared' ? 'bg-green-100 text-green-800' : 
                         'bg-yellow-100 text-yellow-800'
                       }`}>
-                        {cheque.status}
+                        {cheque.status}    
                       </span>
                     </td>
                   </tr>
