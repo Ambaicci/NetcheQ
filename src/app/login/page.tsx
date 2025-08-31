@@ -77,7 +77,7 @@ export default function LoginPage() {
 
         {/* Create account link */}
         <p className="text-sm text-center text-blue-700">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a href="/register" className="font-semibold hover:underline">
             Create one
           </a>
@@ -86,3 +86,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
