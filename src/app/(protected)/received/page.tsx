@@ -1,6 +1,9 @@
-﻿import { Button } from "@/components/ui/button";
+﻿"use client";
+
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 // Mock data for demonstration - we'll replace with real data later
 const mockReceivedCheques = [
@@ -25,6 +28,50 @@ const mockReceivedCheques = [
 ];
 
 export default function ReceivedPage() {   
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate data loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="p-8">
+        <div className="flex items-center justify-between mb-8">
+          <div className="space-y-2">
+            <div className="h-8 bg-gray-200 rounded w-64 animate-pulse"></div>
+            <div className="h-4 bg-gray-200 rounded w-48 animate-pulse"></div>
+          </div>
+        </div>
+
+        {/* Card Skeletons */}
+        <div className="grid gap-6">
+          {[1, 2].map((i) => (
+            <Card key={i} className="border-blue-200 animate-pulse">
+              <CardHeader className="bg-blue-50">
+                <div className="h-6 bg-gray-300 rounded w-1/3 mb-2"></div>
+                <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="h-8 bg-gray-200 rounded w-1/4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                <div className="flex gap-2 mt-4">
+                  <div className="h-10 bg-gray-200 rounded w-24"></div>
+                  <div className="h-10 bg-gray-200 rounded w-24"></div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
