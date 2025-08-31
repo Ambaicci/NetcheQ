@@ -1,4 +1,6 @@
-﻿import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+﻿"use client";
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SkeletonCard } from "@/components/ui/skeleton";
 import { useState, useEffect } from "react";
@@ -137,3 +139,5 @@ export default function HistoryPage() {
     </div>
   );
 }
+
+
