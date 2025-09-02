@@ -1,6 +1,5 @@
-console.log("Vercel deployment test: Build configuration fix verification.");
-import { DashboardStats } from "@/components/dashboard-stats";
+import { redirect } from 'next/navigation'
 
-export default function Dashboard() {
-  return <DashboardStats />;
+export default function Home() {
+  redirect('/dashboard')
 }

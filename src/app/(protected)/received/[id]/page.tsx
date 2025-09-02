@@ -8,7 +8,7 @@ import QRCode from "qrcode";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+
 
 // Interface definitions for type safety
 interface Bank {

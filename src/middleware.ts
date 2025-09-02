@@ -1,26 +1,56 @@
+import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
-  const basicAuth = request.headers.get('authorization')
+export async function middleware(request: NextRequest) {
+  const response = NextResponse.next()
 
-  if (basicAuth) {
-    const authValue = basicAuth.split(' ')[1]
-    const [user, password] = Buffer.from(authValue, 'base64').toString().split(':')
-    
-    if (user === 'admin' && password === 'netcheq2024') {
-      return NextResponse.next()
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name) {
+          return request.cookies.get(name)?.value
+        },
+        set(name, value, options) {
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+        },
+        remove(name, options) {
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
+        },
+      },
     }
+  )
+
+  const { data: { session } } = await supabase.auth.getSession()
+
+  // Protect ALL routes under /dashboard, /issue, /received, /history, /settings
+  const protectedPaths = ['/dashboard', '/issue', '/received', '/history', '/settings']
+  const isProtectedPath = protectedPaths.some(path => request.nextUrl.pathname.startsWith(path))
+
+  if (isProtectedPath && !session) {
+    return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  return new Response('Authentication required', {
-    status: 401,
-    headers: {
-      'WWW-Authenticate': 'Basic realm="NetcheQ Secure Area"'
-    }
-  })
+  // Redirect authenticated users away from auth pages
+  if (session && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register')) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  return response
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
 }

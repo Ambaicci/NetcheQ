@@ -1,4 +1,4 @@
-﻿"use client";
+'use client'
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,25 +32,25 @@ export default function ReceivedPage() {
 
   useEffect(() => {
     // Simulate data loading
-    const timer = setTimeout(() => {
+    const timer = setTimeout(() => {       
       setIsLoading(false);
     }, 2000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer);      
   }, []);
 
   if (isLoading) {
     return (
       <div className="p-8">
         <div className="flex items-center justify-between mb-8">
-          <div className="space-y-2">
-            <div className="h-8 bg-gray-200 rounded w-64 animate-pulse"></div>
-            <div className="h-4 bg-gray-200 rounded w-48 animate-pulse"></div>
+          <div className="space-y-2">      
+            <div className="h-8 bg-gray-200 rounded w-64 animate-pulse"></div>        
+            <div className="h-4 bg-gray-200 rounded w-48 animate-pulse"></div>        
           </div>
         </div>
 
         {/* Card Skeletons */}
-        <div className="grid gap-6">
+        <div className="grid gap-6">       
           {[1, 2].map((i) => (
             <Card key={i} className="border-blue-200 animate-pulse">
               <CardHeader className="bg-blue-50">
@@ -76,8 +76,8 @@ export default function ReceivedPage() {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-blue-900">Received Cheques</h1>
-          <p className="text-blue-700">Cheques sent to you will appear here</p>      
+          <h1 className="text-3xl font-bold text-blue-900">Received Cheques</h1>      
+          <p className="text-blue-700">Cheques sent to you will appear here</p>       
         </div>
       </div>
 
@@ -92,14 +92,14 @@ export default function ReceivedPage() {
           </Card>
         ) : (
           mockReceivedCheques.map((cheque) => (
-            <Card key={cheque.id} className="hover:shadow-md transition-shadow border-blue-200 hover:border-blue-300">      
+            <Card key={cheque.id} className="hover:shadow-md transition-shadow border-blue-200 hover:border-blue-300">           
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-blue-50">
                 <div>
                   <CardTitle className="text-sm font-medium text-blue-900">
                     From: {cheque.issuer}  
                   </CardTitle>
                   <CardDescription className="text-blue-700">        
-                    {cheque.from}  {new Date(cheque.date).toLocaleDateString()}    
+                    {cheque.from}  {new Date(cheque.date).toLocaleDateString()}       
                   </CardDescription>       
                 </div>
                 <span className={`text-xs rounded-full px-2 py-1 ${
@@ -111,7 +111,7 @@ export default function ReceivedPage() {
                 </span>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-blue-900">${cheque.amount.toFixed(2)}</div> 
+                <div className="text-2xl font-bold text-blue-900">${cheque.amount.toFixed(2)}</div>
                 {cheque.memo && <p className="mt-2 text-sm text-blue-700">Memo: {cheque.memo}</p>}  
 
                 <div className="flex gap-2 mt-4">
